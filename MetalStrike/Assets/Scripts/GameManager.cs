@@ -43,8 +43,7 @@ public class GameManager : MonoBehaviour
             if (t.Player == OwningPlayer && t.state == Tank.State.Idle)
             {
                 // get position relative to team spawn
-                float dx = teamSpawn[OwningPlayer].position.x - t.transform.position.x;
-
+                float dx = teamSpawn[OwningPlayer].position.x - playerGridOrigin[OwningPlayer].position.x;
                 Vector3 spawnPosition = t.transform.position;
                 spawnPosition.x += dx;
 

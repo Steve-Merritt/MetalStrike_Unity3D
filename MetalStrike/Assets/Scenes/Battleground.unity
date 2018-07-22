@@ -216,7 +216,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4630880317301866, guid: 9e20851aac171df4d978fb7f84b66052, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -17
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 4630880317301866, guid: 9e20851aac171df4d978fb7f84b66052, type: 2}
       propertyPath: m_LocalPosition.y
@@ -258,7 +258,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4908469341701576, guid: 313f8fec8db542b47a08221be4801fbe, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4908469341701576, guid: 313f8fec8db542b47a08221be4801fbe, type: 2}
       propertyPath: m_LocalPosition.y
@@ -307,26 +307,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
-      propertyPath: test.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
-      propertyPath: teamSpawn.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
-      propertyPath: playerGridOrigin.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
-      propertyPath: playerSpawnOrigin.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4086748220487058, guid: 6d84241a99e8c4947b165f3a44204626, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -361,44 +341,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
         type: 2}
-      propertyPath: spawnOriginPrefab
-      value: 
-      objectReference: {fileID: 4423129518420522, guid: c0e1b776da1ed664f8e933142e35138c,
-        type: 2}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
-      propertyPath: tankPrefab
-      value: 
-      objectReference: {fileID: 114131124989173768, guid: 50778a263989645428e2d6d61086206c,
-        type: 2}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
-      propertyPath: team1Spawn
-      value: 
-      objectReference: {fileID: 1893434787}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
-      propertyPath: team2Spawn
-      value: 
-      objectReference: {fileID: 872796582}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
-      propertyPath: gridCellPrefab
-      value: 
-      objectReference: {fileID: 114069868516864710, guid: cdacb65e31110ac4f9fd0ff0ab40adee,
-        type: 2}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
-      propertyPath: playerSpawnOrigin.Array.data[0]
-      value: 
-      objectReference: {fileID: 1893434787}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
-      propertyPath: playerSpawnOrigin.Array.data[1]
-      value: 
-      objectReference: {fileID: 872796582}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
       propertyPath: playerGridOrigin.Array.data[0]
       value: 
       objectReference: {fileID: 2120143311}
@@ -409,14 +351,14 @@ Prefab:
       objectReference: {fileID: 637999139}
     - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
         type: 2}
-      propertyPath: teamSpawn.Array.data[1]
-      value: 
-      objectReference: {fileID: 872796582}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
       propertyPath: teamSpawn.Array.data[0]
       value: 
       objectReference: {fileID: 1893434787}
+    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
+        type: 2}
+      propertyPath: teamSpawn.Array.data[1]
+      value: 
+      objectReference: {fileID: 872796582}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6d84241a99e8c4947b165f3a44204626, type: 2}
   m_IsPrefabParent: 0
@@ -429,7 +371,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4423129518420522, guid: c0e1b776da1ed664f8e933142e35138c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4423129518420522, guid: c0e1b776da1ed664f8e933142e35138c, type: 2}
       propertyPath: m_LocalPosition.y
@@ -600,7 +542,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4090042777427606, guid: e525255c02c5f1a468b06b755984dd9e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -20
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 4090042777427606, guid: e525255c02c5f1a468b06b755984dd9e, type: 2}
       propertyPath: m_LocalPosition.y
@@ -653,7 +595,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4889172854715812, guid: 293fc9ba08b87be44ae2209a54f16e8c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -12
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 4889172854715812, guid: 293fc9ba08b87be44ae2209a54f16e8c, type: 2}
       propertyPath: m_LocalPosition.y
@@ -879,7 +821,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4423129518420522, guid: c0e1b776da1ed664f8e933142e35138c, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 4423129518420522, guid: c0e1b776da1ed664f8e933142e35138c, type: 2}
       propertyPath: m_LocalPosition.y
