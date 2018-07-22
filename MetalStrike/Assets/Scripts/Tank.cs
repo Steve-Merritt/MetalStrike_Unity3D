@@ -126,8 +126,8 @@ public class Tank : MonoBehaviour
     {
         if (fireHitPrefab == null) return;
 
-        Vector3 position = transform.position + Vector3.right * -0.4f + Vector3.up * 0.4f;
-        ParticleSystem ps = Instantiate(fireHitPrefab, position, Quaternion.identity) as ParticleSystem;
+        //Vector3 position = transform.position + Vector3.right * -0.4f + Vector3.up * 0.4f; TODO: adjust hit effect
+        ParticleSystem ps = Instantiate(fireHitPrefab, transform.position, Quaternion.identity) as ParticleSystem;
         Destroy(ps.gameObject, ps.main.startLifetime.constant);
     }
 
