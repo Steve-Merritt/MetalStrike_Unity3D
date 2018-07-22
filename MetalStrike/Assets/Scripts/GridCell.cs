@@ -7,7 +7,8 @@ public class GridCell : MonoBehaviour
     private Color startColor;
     private Renderer RenderComponent;
 
-    public Transform tankPrefab;
+    public Tank tankPrefab;
+    public int OwningPlayer;
 
     private void Start()
     {
@@ -27,6 +28,8 @@ public class GridCell : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Instantiate(tankPrefab, transform.position + new Vector3(0, 0.1f, 0), transform.rotation);
+        var tankInst = Instantiate(tankPrefab, transform.position + new Vector3(0, 0.1f, 0), transform.rotation) as Tank;
+        tankInst.Player = OwningPlayer;
+        tankInst.state = Tank.State.Idle;
     }
 }
