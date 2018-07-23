@@ -26,11 +26,13 @@ public class Tank : MonoBehaviour
 
     public Vector3 velocity;
     public Vector3 goal;
+    private Vector3 goalDirection;
 
     // Use this for initialization
     void Start ()
     {
-        audioSource = GetComponent<AudioSource>();        
+        audioSource = GetComponent<AudioSource>();
+        goalDirection = transform.forward;
 	}
 	
 	// Update is called once per frame
@@ -71,7 +73,8 @@ public class Tank : MonoBehaviour
             velocity += avoid + tendToGoal;
             velocity.Normalize();
 
-            transform.Translate(velocity * Speed * Time.deltaTime);
+            transform.rotation = Quaternion.LookRotation(velocity);
+            transform.Translate(transform.forward * Speed * Time.deltaTime, Space.World);
         }
     }
 
@@ -87,16 +90,16 @@ public class Tank : MonoBehaviour
             // TODO: find a better way to do this
             if (Player == 0)
             {
-                if (nearestAlly.transform.position.x > transform.position.x)
+                if (nearestAlly.transform.position.z > transform.position.z)
                 {
-                    avoid = Vector3.forward;
+                    avoid = Vector3.right;
                 }
             }
             else
             {
-                if (nearestAlly.transform.position.x < transform.position.x)
+                if (nearestAlly.transform.position.z < transform.position.z)
                 {
-                    avoid = Vector3.forward;
+                    avoid = Vector3.right;
                 }
             }
         }
@@ -108,7 +111,7 @@ public class Tank : MonoBehaviour
     {
         Vector3 tendToGoal = Vector3.zero;
 
-        tendToGoal = Vector3.right / 50;
+        tendToGoal = goalDirection / 50;
 
         return tendToGoal;
     }
@@ -117,6 +120,11 @@ public class Tank : MonoBehaviour
     {
         if (EnemyTarget.activeInHierarchy)
         {
+            // rotate to face enemy
+            Vector3 enemyDirection = EnemyTarget.transform.position - transform.position;
+            transform.rotation = Quaternion.LookRotation(enemyDirection);
+
+            // fire if ready!
             if (FiringTimer <= 0.0f)
             {
                 PlayFireBurst();
@@ -184,7 +192,7 @@ public class Tank : MonoBehaviour
     {
         if (fireBurstPrefab == null) return;
 
-        ShellSpawnPoint = transform.Find("turret/ShellSpawn");
+        ShellSpawnPoint = transform.Find("ShellSpawn");
 
         ParticleSystem ps = Instantiate(fireBurstPrefab, ShellSpawnPoint.position, ShellSpawnPoint.rotation) as ParticleSystem;
         Destroy(ps.gameObject, ps.main.startLifetime.constant);

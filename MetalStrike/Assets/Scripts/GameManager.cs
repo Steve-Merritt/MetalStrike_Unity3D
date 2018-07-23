@@ -43,17 +43,17 @@ public class GameManager : MonoBehaviour
             if (t.Player == OwningPlayer && t.state == Tank.State.Idle)
             {
                 // get position relative to team spawn
-                float dx = teamSpawn[OwningPlayer].position.x - playerGridOrigin[OwningPlayer].position.x;
+                float dz = teamSpawn[OwningPlayer].position.z - playerGridOrigin[OwningPlayer].position.z;
                 Vector3 spawnPosition = t.transform.position;
-                spawnPosition.x += dx;
+                spawnPosition.z += dz;
 
                 Quaternion spawnRotation = teamSpawn[OwningPlayer].rotation;
 
                 var tankInst = Instantiate(tankPrefab, spawnPosition, spawnRotation) as Tank;
                 tankInst.Player = OwningPlayer;
                 tankInst.state = Tank.State.MovingToTarget;
-                tankInst.goal = tankInst.transform.position + (tankInst.transform.right * 50);
-                tankInst.velocity = Vector3.right;
+                tankInst.goal = tankInst.transform.position + (tankInst.transform.forward * 50);
+                tankInst.velocity = tankInst.transform.forward;
             }
         }
 
