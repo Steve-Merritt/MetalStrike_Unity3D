@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
                 var tankInst = Instantiate(tankPrefab, spawnPosition, spawnRotation) as Tank;
                 tankInst.Player = OwningPlayer;
                 tankInst.state = Tank.State.MovingToTarget;
+                tankInst.goal = tankInst.transform.position + (tankInst.transform.right * 50);
+                tankInst.velocity = Vector3.right;
             }
         }
 

@@ -24,10 +24,13 @@ public class Tank : MonoBehaviour
 
     AudioSource audioSource;
 
+    public Vector3 velocity;
+    public Vector3 goal;
+
     // Use this for initialization
     void Start ()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();        
 	}
 	
 	// Update is called once per frame
@@ -62,8 +65,52 @@ public class Tank : MonoBehaviour
 
         if (state == State.MovingToTarget)
         {
-            transform.Translate(Vector3.right * Speed * Time.deltaTime);
+            Vector3 avoid = Avoidance();
+            Vector3 tendToGoal = TendToGoal();
+
+            velocity += avoid + tendToGoal;
+            velocity.Normalize();
+
+            transform.Translate(velocity * Speed * Time.deltaTime);
         }
+    }
+
+    private Vector3 Avoidance()
+    {
+        Vector3 avoid = Vector3.zero;
+
+        // find nearest ally
+        Tank nearestAlly = FindNearestAlly();
+        if (nearestAlly != this)
+        {
+            // determine if they are in front of us
+            // TODO: find a better way to do this
+            if (Player == 0)
+            {
+                if (nearestAlly.transform.position.x > transform.position.x)
+                {
+                    avoid = Vector3.forward;
+                }
+            }
+            else
+            {
+                if (nearestAlly.transform.position.x < transform.position.x)
+                {
+                    avoid = Vector3.forward;
+                }
+            }
+        }
+
+        return avoid;
+    }
+
+    private Vector3 TendToGoal()
+    {
+        Vector3 tendToGoal = Vector3.zero;
+
+        tendToGoal = Vector3.right / 50;
+
+        return tendToGoal;
     }
 
     private void Attack()
@@ -105,6 +152,32 @@ public class Tank : MonoBehaviour
         {
             state = State.Attacking;
         }
+    }
+
+    private Tank FindNearestAlly()
+    {
+        float nearestAllyRange = 1.0f;
+        Tank nearestAlly = this; // start with ourselves as the nearest ally
+
+        GameObject[] tanks = GameObject.FindGameObjectsWithTag("Tank");
+        foreach (GameObject go in tanks)
+        {
+            Tank t = go.GetComponent<Tank>();
+            if (t == this)
+                continue;
+
+            if (!IsEnemy(t.Player) && t.state != State.Idle)
+            {
+                var range = Vector3.Distance(t.transform.position, transform.position);
+                if (range < nearestAllyRange)
+                {
+                    nearestAllyRange = range;
+                    nearestAlly = t.GetComponent<Tank>();
+                }
+            }
+        }
+
+        return nearestAlly;
     }
 
     private void PlayFireBurst()
