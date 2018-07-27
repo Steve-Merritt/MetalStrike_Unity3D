@@ -9,31 +9,31 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1218912141406692}
+  m_RootGameObject: {fileID: 1571125607617914}
   m_IsPrefabParent: 1
---- !u!1 &1218912141406692
+--- !u!1 &1571125607617914
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4086748220487058}
-  - component: {fileID: 114088583626034734}
-  - component: {fileID: 82977898986553002}
+  - component: {fileID: 4299270277509070}
+  - component: {fileID: 82726293185463180}
+  - component: {fileID: 114104050374257230}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: AudioManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4086748220487058
+--- !u!4 &4299270277509070
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1218912141406692}
+  m_GameObject: {fileID: 1571125607617914}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -41,24 +41,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &82977898986553002
+--- !u!82 &82726293185463180
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1218912141406692}
+  m_GameObject: {fileID: 1571125607617914}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b9db9db386bf1e54f9374b6891d61e97, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 130
+  Priority: 128
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -136,24 +136,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &114088583626034734
+--- !u!114 &114104050374257230
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1218912141406692}
+  m_GameObject: {fileID: 1571125607617914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da0e4eacc8368842bd5692cf41ab1c5, type: 3}
+  m_Script: {fileID: 11500000, guid: 43ece8cfb144f1d4b8caee4fccb96235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tankPrefab: {fileID: 114883864010736188, guid: 41e3da65baa54b74f8768c83fbaf8f21,
-    type: 2}
-  gridCellPrefab: {fileID: 114069868516864710, guid: cdacb65e31110ac4f9fd0ff0ab40adee,
-    type: 2}
-  playerGridOrigin:
-  - {fileID: 0}
-  - {fileID: 0}
-  teamSpawn:
-  - {fileID: 0}
-  - {fileID: 0}
+  audioClip_TankExplode: {fileID: 8300000, guid: db32c270d92795a4597782f1e56128e2,
+    type: 3}

@@ -10,6 +10,8 @@ public class GridCell : MonoBehaviour
     public Tank tankPrefab;
     public int OwningPlayer;
 
+    private bool Occupied = false;
+
     private void Start()
     {
         RenderComponent = GetComponent<Renderer>();
@@ -28,8 +30,12 @@ public class GridCell : MonoBehaviour
 
     private void OnMouseDown()
     {
-        var tankInst = Instantiate(tankPrefab, transform.position + new Vector3(0, 0.1f, 0), transform.rotation) as Tank;
-        tankInst.Player = OwningPlayer;
-        tankInst.state = Tank.State.Idle;
+        if (!Occupied)
+        {
+            var tankInst = Instantiate(tankPrefab, transform.position + new Vector3(0, 0.1f, 0), transform.rotation) as Tank;
+            tankInst.Player = OwningPlayer;
+            tankInst.state = Tank.State.Idle;
+            Occupied = true;
+        }
     }
 }

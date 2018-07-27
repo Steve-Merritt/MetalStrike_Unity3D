@@ -7,11 +7,14 @@ public class Tank : MonoBehaviour
     [SerializeField] float Speed = 10;
     [SerializeField] float AttackRange = 5;
     [SerializeField] float FireRate = 2;
+    [SerializeField] int AttackDamage = 10;
 
     private Transform ShellSpawnPoint;
+    private Transform HealthbarTransform;
 
     public ParticleSystem fireBurstPrefab;
     public ParticleSystem fireHitPrefab;
+    private GameObject ParticleManager;
 
     public int Player { get; set; }
 
@@ -22,7 +25,8 @@ public class Tank : MonoBehaviour
 
     private float FiringTimer = 0.0f;
 
-    AudioSource audioSource;
+    public AudioClip audioClip_TankFire;
+    private GameObject audioManager;
 
     public Vector3 velocity;
     public Vector3 goal;
@@ -31,9 +35,18 @@ public class Tank : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioManager = GameObject.Find("AudioManager");
+        ParticleManager = GameObject.Find("ParticleManager");
+
         goalDirection = transform.forward;
-	}
+
+        // Assign ourselves to the healthbar
+        GetComponent<Health>().OwningTank = this;
+
+        // Adjust healthbar to face camera
+        HealthbarTransform =  transform.Find("HealthbarCanvas");
+        HealthbarTransform.rotation = Quaternion.Euler(45*transform.forward.z, transform.rotation.eulerAngles.y-45, 0);
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -67,6 +80,13 @@ public class Tank : MonoBehaviour
 
         if (state == State.MovingToTarget)
         {
+            // Continue to reload while moving
+            if (FiringTimer > 0.0f)
+            {
+                FiringTimer -= Time.deltaTime;
+                FiringTimer = Mathf.Clamp(FiringTimer, 0.0f, FireRate);
+            }
+
             Vector3 avoid = Avoidance();
             Vector3 tendToGoal = TendToGoal();
 
@@ -118,7 +138,7 @@ public class Tank : MonoBehaviour
 
     private void Attack()
     {
-        if (EnemyTarget.activeInHierarchy)
+        if (EnemyTarget != null)
         {
             // rotate to face enemy
             Vector3 enemyDirection = EnemyTarget.transform.position - transform.position;
@@ -129,12 +149,18 @@ public class Tank : MonoBehaviour
             {
                 PlayFireBurst();
                 EnemyTarget.GetComponent<Tank>().PlayFireHit();
+                EnemyTarget.GetComponent<Tank>().GetComponent<Health>().TakeDamage(AttackDamage);
                 FiringTimer = FireRate;
             }
             else
             {
                 FiringTimer -= Time.deltaTime;
+                FiringTimer = Mathf.Clamp(FiringTimer, 0.0f, FireRate);
             }
+        }
+        else
+        {
+            state = State.MovingToTarget;
         }
     }
 
@@ -197,10 +223,7 @@ public class Tank : MonoBehaviour
         ParticleSystem ps = Instantiate(fireBurstPrefab, ShellSpawnPoint.position, ShellSpawnPoint.rotation) as ParticleSystem;
         Destroy(ps.gameObject, ps.main.startLifetime.constant);
 
-        if (!audioSource.isPlaying)
-        {
-            audioSource.Play();
-        }
+        AudioSource.PlayClipAtPoint(audioClip_TankFire, transform.position);
     }
 
     public void PlayFireHit()
@@ -210,6 +233,13 @@ public class Tank : MonoBehaviour
         //Vector3 position = transform.position + Vector3.right * -0.4f + Vector3.up * 0.4f; TODO: adjust hit effect
         ParticleSystem ps = Instantiate(fireHitPrefab, transform.position, Quaternion.identity) as ParticleSystem;
         Destroy(ps.gameObject, ps.main.startLifetime.constant);
+    }
+
+    public void Die()
+    {
+        audioManager.GetComponent<AudioManager>().PlayTankExplodeAtLocation(transform.position);
+        ParticleManager.GetComponent<ParticleManager>().PlayTankExplodeAtLocation(transform.position);
+        Destroy(gameObject);
     }
 
 }
