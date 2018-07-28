@@ -122,7 +122,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4965396852358746, guid: 7c978df260cb6d546ab36305c3926836, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.5
+      value: 3.8
       objectReference: {fileID: 0}
     - target: {fileID: 4965396852358746, guid: 7c978df260cb6d546ab36305c3926836, type: 2}
       propertyPath: m_LocalPosition.y
@@ -648,7 +648,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4607258709070812, guid: df23e4c59ddb90a4691333c2443cbfd6, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5.5
+      value: 3.8
       objectReference: {fileID: 0}
     - target: {fileID: 4607258709070812, guid: df23e4c59ddb90a4691333c2443cbfd6, type: 2}
       propertyPath: m_LocalPosition.y
@@ -725,6 +725,12 @@ Prefab:
       propertyPath: PS_TankExplode
       value: 
       objectReference: {fileID: 198702240252376472, guid: b9387b4ab39649546bda710c20940407,
+        type: 2}
+    - target: {fileID: 114957066457715086, guid: ccb23c75581967b469ef2d8effce671f,
+        type: 2}
+      propertyPath: PS_FireHit
+      value: 
+      objectReference: {fileID: 198422494748909384, guid: c6b141d3773bf954284a92b93edae81f,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccb23c75581967b469ef2d8effce671f, type: 2}

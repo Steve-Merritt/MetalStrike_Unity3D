@@ -4,20 +4,14 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public const int maxHealth = 100;
-    public int currentHealth = maxHealth;
+    public int maxHealth = 100;
+    public int currentHealth { get; set; }
     public RectTransform healthbar;
-    public Tank OwningTank;
 
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-            OwningTank.Die();
-        }
-
-        healthbar.sizeDelta = new Vector2(currentHealth, healthbar.sizeDelta.y);
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        healthbar.sizeDelta = new Vector2((float)currentHealth / maxHealth * 100.0f, healthbar.sizeDelta.y);
     }
 }

@@ -12,9 +12,8 @@ public class Tank : MonoBehaviour
     private Transform ShellSpawnPoint;
     private Transform HealthbarTransform;
 
-    public ParticleSystem fireBurstPrefab;
-    public ParticleSystem fireHitPrefab;
-    private GameObject ParticleManager;
+    public ParticleSystem fireBurstPrefab;    
+    private ParticleManager particleManager;
 
     public int Player { get; set; }
 
@@ -26,22 +25,25 @@ public class Tank : MonoBehaviour
     private float FiringTimer = 0.0f;
 
     public AudioClip audioClip_TankFire;
-    private GameObject audioManager;
+    private AudioManager audioManager;
 
     public Vector3 velocity;
     public Vector3 goal;
     private Vector3 goalDirection;
 
+    private Health health;
+
     // Use this for initialization
     void Start ()
     {
-        audioManager = GameObject.Find("AudioManager");
-        ParticleManager = GameObject.Find("ParticleManager");
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        particleManager = GameObject.Find("ParticleManager").GetComponent<ParticleManager>();
 
         goalDirection = transform.forward;
 
         // Assign ourselves to the healthbar
-        GetComponent<Health>().OwningTank = this;
+        health = GetComponent<Health>();
+        health.currentHealth = health.maxHealth;
 
         // Adjust healthbar to face camera
         HealthbarTransform =  transform.Find("HealthbarCanvas");
@@ -51,8 +53,11 @@ public class Tank : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        //if (Player == 2)
-        //    return; // short circuit team 2 spawns for now.
+        // Check vitals
+        if (health.currentHealth <= 0)
+        {
+            Die();
+        }
 
         switch (state)
         {
@@ -148,8 +153,8 @@ public class Tank : MonoBehaviour
             if (FiringTimer <= 0.0f)
             {
                 PlayFireBurst();
-                EnemyTarget.GetComponent<Tank>().PlayFireHit();
-                EnemyTarget.GetComponent<Tank>().GetComponent<Health>().TakeDamage(AttackDamage);
+                particleManager.PlayFireHitAtLocation(EnemyTarget.transform.position);
+                EnemyTarget.GetComponent<Health>().TakeDamage(AttackDamage);
                 FiringTimer = FireRate;
             }
             else
@@ -250,19 +255,10 @@ public class Tank : MonoBehaviour
         AudioSource.PlayClipAtPoint(audioClip_TankFire, transform.position);
     }
 
-    public void PlayFireHit()
-    {
-        if (fireHitPrefab == null) return;
-
-        //Vector3 position = transform.position + Vector3.right * -0.4f + Vector3.up * 0.4f; TODO: adjust hit effect
-        ParticleSystem ps = Instantiate(fireHitPrefab, transform.position, Quaternion.identity) as ParticleSystem;
-        Destroy(ps.gameObject, ps.main.startLifetime.constant);
-    }
-
     public void Die()
     {
-        audioManager.GetComponent<AudioManager>().PlayTankExplodeAtLocation(transform.position);
-        ParticleManager.GetComponent<ParticleManager>().PlayTankExplodeAtLocation(transform.position);
+        audioManager.PlayTankExplodeAtLocation(transform.position);
+        particleManager.PlayTankExplodeAtLocation(transform.position);
         Destroy(gameObject);
     }
 
