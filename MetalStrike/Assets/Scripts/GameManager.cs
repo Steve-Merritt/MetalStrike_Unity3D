@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,19 +14,53 @@ public class GameManager : MonoBehaviour
     private const int GRID_SIZE = 8;
     private GridCell[] grid = new GridCell[GRID_SIZE* GRID_SIZE];
 
+    public GameObject spawnTimer;
+    private Text spawnTimerText;
+    public float spawnInterval = 30;
+    private float timeUntilNextSpawn = 0;
+
+    public GameObject creditDisplay;
+    private Text creditDisplayText;
+    private int credits = 0;
+    public int creditIncrement = 10;
+    private float timeUntilNextCredits = 1;
+
     // Use this for initialization
     void Start ()
     {
+        spawnTimerText = spawnTimer.GetComponent<Text>();
+        timeUntilNextSpawn = spawnInterval;
+
+        creditDisplayText = creditDisplay.GetComponent<Text>();
+
         SpawnGrids();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        // Update spawn timer
+        timeUntilNextSpawn = Mathf.Clamp(timeUntilNextSpawn -= Time.deltaTime, 0, spawnInterval);
+        if (timeUntilNextSpawn <= 0)
+        {
+            timeUntilNextSpawn = spawnInterval;
+            SpawnNextWaves();
+        }
+        int displayedTime = (int)timeUntilNextSpawn + 1;
+        displayedTime = Mathf.Clamp(displayedTime, 1, (int)spawnInterval);
+        spawnTimerText.text = displayedTime.ToString("F0");
 
+        // Update credits
+        timeUntilNextCredits = Mathf.Clamp(timeUntilNextCredits -= Time.deltaTime, 0, 1);
+        if (timeUntilNextCredits <= 0)
+        {
+            timeUntilNextCredits = 1;
+            credits += creditIncrement;
+        }
+        creditDisplayText.text = credits.ToString();
 	}
 
-    public void Simulate()
+    public void SpawnNextWaves()
     {
         for (int i = 0; i < playerGridOrigin.Length; i++)
         {
