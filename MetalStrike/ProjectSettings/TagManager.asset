@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tank
+  - Team1Base
+  - Team2Base
   layers:
   - Default
   - TransparentFX

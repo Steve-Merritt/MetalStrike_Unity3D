@@ -182,6 +182,30 @@ public class Tank : MonoBehaviour
             }
         }
 
+        if (EnemyTarget == null)
+        {
+            // No Enemy tanks found - see if we're in range of the enemy base
+            GameObject enemyBase = null;
+            if (Player == 0)
+            {
+                enemyBase = GameObject.FindGameObjectWithTag("Team2Base");
+            }
+            else if (Player == 1)
+            {
+                enemyBase = GameObject.FindGameObjectWithTag("Team1Base");
+            }
+
+            if (enemyBase)
+            {
+                var range = Vector3.Distance(enemyBase.transform.position, transform.position);
+                if (range < AttackRange)
+                {
+                    nearestEnemyRange = range;
+                    EnemyTarget = enemyBase;
+                }
+            }
+        }
+
         if (EnemyTarget != null && EnemyTarget.activeInHierarchy)
         {
             state = State.Attacking;
