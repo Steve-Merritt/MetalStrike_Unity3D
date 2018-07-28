@@ -32,10 +32,14 @@ public class GridCell : MonoBehaviour
     {
         if (!Occupied)
         {
-            var tankInst = Instantiate(tankPrefab, transform.position + new Vector3(0, 0.1f, 0), transform.rotation) as Tank;
-            tankInst.Player = OwningPlayer;
-            tankInst.state = Tank.State.Idle;
-            Occupied = true;
+            if (GameManager.credits >= Tank.cost)
+            {
+                GameManager.credits -= Tank.cost;
+                var tankInst = Instantiate(tankPrefab, transform.position + new Vector3(0, 0.1f, 0), transform.rotation) as Tank;
+                tankInst.Player = OwningPlayer;
+                tankInst.state = Tank.State.Idle;
+                Occupied = true;
+            }
         }
     }
 }

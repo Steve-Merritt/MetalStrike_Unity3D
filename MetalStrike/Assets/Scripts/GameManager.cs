@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject creditDisplay;
     private Text creditDisplayText;
-    private int credits = 0;
+    public static int credits = 0;
     public int creditIncrement = 10;
     private float timeUntilNextCredits = 1;
 

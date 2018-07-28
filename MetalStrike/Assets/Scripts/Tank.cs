@@ -33,6 +33,8 @@ public class Tank : MonoBehaviour
 
     private Health health;
 
+    public static int cost = 50;
+
     // Use this for initialization
     void Start ()
     {
