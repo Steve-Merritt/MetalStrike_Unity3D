@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
     public Tank tankPrefab;
     public GridCell gridCellPrefab;
@@ -32,14 +33,10 @@ public class GameManager : MonoBehaviour
         timeUntilNextSpawn = spawnInterval;
 
         creditDisplayText = creditDisplay.GetComponent<Text>();
-
-        SpawnGrids();
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    private void UpdateSpawnTimer()
     {
-        // Update spawn timer
         timeUntilNextSpawn = Mathf.Clamp(timeUntilNextSpawn -= Time.deltaTime, 0, spawnInterval);
         if (timeUntilNextSpawn <= 0)
         {
@@ -49,8 +46,10 @@ public class GameManager : MonoBehaviour
         int displayedTime = (int)timeUntilNextSpawn + 1;
         displayedTime = Mathf.Clamp(displayedTime, 1, (int)spawnInterval);
         spawnTimerText.text = displayedTime.ToString("F0");
+    }
 
-        // Update credits
+    private void UpdateCredits()
+    {
         timeUntilNextCredits = Mathf.Clamp(timeUntilNextCredits -= Time.deltaTime, 0, 1);
         if (timeUntilNextCredits <= 0)
         {
@@ -58,7 +57,14 @@ public class GameManager : MonoBehaviour
             credits += creditIncrement;
         }
         creditDisplayText.text = credits.ToString();
-	}
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        UpdateSpawnTimer();
+        //UpdateCredits();
+    }
 
     public void SpawnNextWaves()
     {
@@ -89,12 +95,14 @@ public class GameManager : MonoBehaviour
                 tankInst.state = Tank.State.MovingToTarget;
                 tankInst.goal = tankInst.transform.position + (tankInst.transform.forward * 50);
                 tankInst.velocity = tankInst.transform.forward;
+
+                NetworkServer.Spawn(tankInst.gameObject);
             }
         }
 
     }
 
-    private void SpawnGrids()
+    public void SpawnGrids()
     {
         // generate grids for each player
         int g = 0;
@@ -111,6 +119,7 @@ public class GameManager : MonoBehaviour
                     Vector3 position = playerGridOrigin[i].position + Vector3.forward * (h % GRID_SIZE) * spacing + Vector3.right * v * spacing;
                     grid[g] = Instantiate(gridCellPrefab, position, playerGridOrigin[i].rotation);
                     grid[g].OwningPlayer = i;
+                    NetworkServer.Spawn(grid[g].gameObject);
                     ++h;
                 }
                 ++v;

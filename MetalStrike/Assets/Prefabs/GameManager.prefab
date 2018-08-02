@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4086748220487058}
   - component: {fileID: 114088583626034734}
   - component: {fileID: 82977898986553002}
+  - component: {fileID: 114156688780744248}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -51,7 +52,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: b9db9db386bf1e54f9374b6891d61e97, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
@@ -159,3 +160,37 @@ MonoBehaviour:
   - {fileID: 0}
   spawnTimer: {fileID: 0}
   spawnInterval: 15
+  creditDisplay: {fileID: 0}
+  creditIncrement: 10
+--- !u!114 &114156688780744248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218912141406692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 109
+    i1: 132
+    i2: 36
+    i3: 26
+    i4: 153
+    i5: 232
+    i6: 196
+    i7: 148
+    i8: 123
+    i9: 22
+    i10: 95
+    i11: 58
+    i12: 68
+    i13: 32
+    i14: 70
+    i15: 38
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0

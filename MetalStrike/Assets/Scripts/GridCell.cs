@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class GridCell : MonoBehaviour
+public class GridCell : NetworkBehaviour
 {
     private Color startColor;
     private Renderer RenderComponent;
 
     public Tank tankPrefab;
+
+    [SyncVar]
     public int OwningPlayer;
 
     private bool Occupied = false;
@@ -19,27 +22,50 @@ public class GridCell : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (!IsOwningPlayer())
+            return;
+
         startColor = RenderComponent.material.color;
         RenderComponent.material.color = Color.yellow;
     }
 
     private void OnMouseExit()
     {
+        if (!IsOwningPlayer())
+            return;
+
         RenderComponent.material.color = startColor;
     }
 
     private void OnMouseDown()
     {
+        PlayerController pc = GetLocalPlayerController();
+        Debug.Log("player controller " + pc.playerId);
+
+        if (!IsOwningPlayer())
+            return;
+
         if (!Occupied)
         {
-            if (GameManager.credits >= Tank.cost)
+            if (true/* || GameManager.credits >= Tank.cost*/)
             {
-                GameManager.credits -= Tank.cost;
-                var tankInst = Instantiate(tankPrefab, transform.position + new Vector3(0, 0.1f, 0), transform.rotation) as Tank;
-                tankInst.Player = OwningPlayer;
-                tankInst.state = Tank.State.Idle;
+                //GameManager.credits -= Tank.cost;
+                //PlayerController pc = GetLocalPlayerController();
+                pc.CmdPlaceUnit(transform.position, transform.rotation, pc.playerId);
                 Occupied = true;
             }
         }
+    }
+
+    private bool IsOwningPlayer()
+    {
+        PlayerController pc = GetLocalPlayerController();
+        return pc.playerId == OwningPlayer;
+    }
+
+    private PlayerController GetLocalPlayerController()
+    {
+        GameObject player = NetworkManager.singleton.client.connection.playerControllers[0].gameObject;
+        return player.GetComponent<PlayerController>();
     }
 }
