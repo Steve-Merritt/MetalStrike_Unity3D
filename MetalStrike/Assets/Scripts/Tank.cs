@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Tank : MonoBehaviour
+public class Tank : NetworkBehaviour
 {
     [SerializeField] float Speed = 10;
     [SerializeField] float AttackRange = 5;
@@ -15,9 +16,12 @@ public class Tank : MonoBehaviour
     public ParticleSystem fireBurstPrefab;    
     private ParticleManager particleManager;
 
-    public int Player { get; set; }
+    [SyncVar]
+    public int Player = 0;
 
     public enum State {  Idle, MovingToTarget, Attacking };
+
+    [SyncVar]
     public State state;
 
     private GameObject EnemyTarget;
@@ -28,7 +32,11 @@ public class Tank : MonoBehaviour
     private AudioManager audioManager;
 
     public Vector3 velocity;
+
+    [SyncVar]
     public Vector3 goal;
+
+    [SyncVar]
     private Vector3 goalDirection;
 
     private Health health;
@@ -56,7 +64,7 @@ public class Tank : MonoBehaviour
 	void Update ()
     {
         // Check vitals
-        if (health.currentHealth <= 0)
+        if (health.currentHealth <= 0 || IsOutOfBounds())
         {
             Die();
         }
@@ -138,7 +146,7 @@ public class Tank : MonoBehaviour
     {
         Vector3 tendToGoal = Vector3.zero;
 
-        tendToGoal = goalDirection / 50;
+        tendToGoal = goalDirection / 40;
 
         return tendToGoal;
     }
@@ -262,6 +270,16 @@ public class Tank : MonoBehaviour
         audioManager.PlayTankExplodeAtLocation(transform.position);
         particleManager.PlayTankExplodeAtLocation(transform.position);
         Destroy(gameObject);
+    }
+
+    private bool IsOutOfBounds()
+    {
+        if (state != State.Idle && (goal.z - transform.position.z) * goalDirection.z < 0)
+        {
+            return true;
+        }
+
+        return false;
     }
 
 }

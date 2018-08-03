@@ -16,7 +16,11 @@ public class GameManager : NetworkBehaviour
     private GridCell[] grid = new GridCell[GRID_SIZE* GRID_SIZE];
 
     public GameObject spawnTimer;
+
     private Text spawnTimerText;
+    [SyncVar]
+    string syncSpawnTime;
+
     public float spawnInterval = 30;
     private float timeUntilNextSpawn = 0;
 
@@ -25,6 +29,8 @@ public class GameManager : NetworkBehaviour
     public static int credits = 0;
     public int creditIncrement = 10;
     private float timeUntilNextCredits = 1;
+
+    public bool bSpawnTimerEnabled = false;
 
     // Use this for initialization
     void Start ()
@@ -45,7 +51,8 @@ public class GameManager : NetworkBehaviour
         }
         int displayedTime = (int)timeUntilNextSpawn + 1;
         displayedTime = Mathf.Clamp(displayedTime, 1, (int)spawnInterval);
-        spawnTimerText.text = displayedTime.ToString("F0");
+        syncSpawnTime = displayedTime.ToString("F0");
+        spawnTimerText.text = syncSpawnTime;
     }
 
     private void UpdateCredits()
@@ -62,7 +69,11 @@ public class GameManager : NetworkBehaviour
     // Update is called once per frame
     void Update ()
     {
-        UpdateSpawnTimer();
+        if (bSpawnTimerEnabled)
+        {
+            UpdateSpawnTimer();
+        }
+
         //UpdateCredits();
     }
 

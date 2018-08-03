@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 65726093805849830}
   - component: {fileID: 114776873675185424}
   - component: {fileID: 114234448577917182}
+  - component: {fileID: 114828016343548496}
   m_Layer: 0
   m_Name: Team 2 Base
   m_TagString: Team2Base
@@ -90,7 +91,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1205137055547626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.8, y: 1, z: 50}
+  m_LocalPosition: {x: 3.8, y: 1, z: 60}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 224320127439460998}
@@ -238,6 +239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1000
+  currentHealth: 0
   healthbar: {fileID: 224197630384201800}
 --- !u!114 &114777800171280090
 MonoBehaviour:
@@ -266,6 +268,38 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114828016343548496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1205137055547626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 223
+    i1: 35
+    i2: 228
+    i3: 197
+    i4: 157
+    i5: 219
+    i6: 144
+    i7: 164
+    i8: 105
+    i9: 19
+    i10: 51
+    i11: 194
+    i12: 68
+    i13: 60
+    i14: 191
+    i15: 214
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!222 &222788762251576004
 CanvasRenderer:
   m_ObjectHideFlags: 1

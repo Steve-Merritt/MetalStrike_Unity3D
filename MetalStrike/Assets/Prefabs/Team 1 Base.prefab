@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 65736563699900232}
   - component: {fileID: 114525372491354786}
   - component: {fileID: 114341791378648636}
+  - component: {fileID: 114031951371263384}
   m_Layer: 0
   m_Name: Team 1 Base
   m_TagString: Team1Base
@@ -151,6 +152,38 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114031951371263384
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1896980008648512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 124
+    i1: 151
+    i2: 141
+    i3: 242
+    i4: 96
+    i5: 203
+    i6: 109
+    i7: 84
+    i8: 106
+    i9: 179
+    i10: 99
+    i11: 5
+    i12: 195
+    i13: 146
+    i14: 104
+    i15: 54
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114341791378648636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -201,6 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1000
+  currentHealth: 0
   healthbar: {fileID: 224466871546557872}
 --- !u!114 &114650608060701816
 MonoBehaviour:

@@ -18,7 +18,9 @@ public class NetworkMgr : NetworkManager
 
         if (m_players == 2)
         {
-            gameManager.GetComponent<GameManager>().SpawnGrids();
+            GameManager gm = gameManager.GetComponent<GameManager>();
+            gm.SpawnGrids();
+            gm.bSpawnTimerEnabled = true;
         }
     }
 }
