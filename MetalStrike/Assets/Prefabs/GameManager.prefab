@@ -158,10 +158,10 @@ MonoBehaviour:
   teamSpawn:
   - {fileID: 0}
   - {fileID: 0}
-  spawnTimer: {fileID: 0}
+  HUD: {fileID: 0}
   spawnInterval: 15
-  creditDisplay: {fileID: 0}
   creditIncrement: 10
+  bSpawnTimerEnabled: 0
 --- !u!114 &114156688780744248
 MonoBehaviour:
   m_ObjectHideFlags: 1

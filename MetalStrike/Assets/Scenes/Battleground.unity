@@ -166,6 +166,8 @@ GameObject:
   - component: {fileID: 36802141}
   - component: {fileID: 36802140}
   - component: {fileID: 36802139}
+  - component: {fileID: 36802143}
+  - component: {fileID: 36802144}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -251,6 +253,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &36802143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 36802138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814c97db834c5974fb3181f786772279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTimer: {fileID: 340843603}
+  creditDisplay: {fileID: 65659652}
+--- !u!114 &36802144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 36802138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!1001 &59729525
 Prefab:
   m_ObjectHideFlags: 0
@@ -561,14 +608,9 @@ Prefab:
       objectReference: {fileID: 872796582}
     - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
         type: 2}
-      propertyPath: spawnTimer
+      propertyPath: HUD
       value: 
-      objectReference: {fileID: 340843603}
-    - target: {fileID: 114088583626034734, guid: 6d84241a99e8c4947b165f3a44204626,
-        type: 2}
-      propertyPath: creditDisplay
-      value: 
-      objectReference: {fileID: 65659652}
+      objectReference: {fileID: 36802143}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d84241a99e8c4947b165f3a44204626, type: 2}
   m_IsPrefabAsset: 0
@@ -623,11 +665,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4423129518420522, guid: c0e1b776da1ed664f8e933142e35138c,
     type: 2}
   m_PrefabInternal: {fileID: 872796581}
---- !u!1 &1017456465 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1218912141406692, guid: 6d84241a99e8c4947b165f3a44204626,
-    type: 2}
-  m_PrefabInternal: {fileID: 763172247}
 --- !u!1 &1060080232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1371,7 +1408,7 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
-  gameManager: {fileID: 1017456465}
+  gameManager: {fileID: 1662824133}
 --- !u!4 &2043396100
 Transform:
   m_ObjectHideFlags: 0

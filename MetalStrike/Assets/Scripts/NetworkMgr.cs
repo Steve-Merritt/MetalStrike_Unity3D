@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public class NetworkMgr : NetworkManager
 {
-    [SerializeField] GameObject gameManager;
+    [SerializeField] GameManager gameManager;
 
     private int m_players = 0;
 
@@ -18,9 +18,7 @@ public class NetworkMgr : NetworkManager
 
         if (m_players == 2)
         {
-            GameManager gm = gameManager.GetComponent<GameManager>();
-            gm.SpawnGrids();
-            gm.bSpawnTimerEnabled = true;
+            gameManager.StartGame();
         }
     }
 }

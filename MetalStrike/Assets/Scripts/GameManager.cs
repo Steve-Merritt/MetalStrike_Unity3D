@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public class GameManager : NetworkBehaviour
@@ -15,31 +14,33 @@ public class GameManager : NetworkBehaviour
     private const int GRID_SIZE = 8;
     private GridCell[] grid = new GridCell[GRID_SIZE* GRID_SIZE];
 
-    public GameObject spawnTimer;
-
-    private Text spawnTimerText;
-    [SyncVar]
-    string syncSpawnTime;
+    [SerializeField] HUDManager HUD;
 
     public float spawnInterval = 30;
     private float timeUntilNextSpawn = 0;
-
-    public GameObject creditDisplay;
-    private Text creditDisplayText;
+   
     public static int credits = 0;
     public int creditIncrement = 10;
     private float timeUntilNextCredits = 1;
 
     public bool bSpawnTimerEnabled = false;
+    public bool bCreditCounterEnabled = false;
+
+    private float hudUpdateInterval = 1.0f;
+    private float timeUntilNextHudUpdate = 0;
 
     // Use this for initialization
     void Start ()
     {
-        spawnTimerText = spawnTimer.GetComponent<Text>();
         timeUntilNextSpawn = spawnInterval;
-
-        creditDisplayText = creditDisplay.GetComponent<Text>();
 	}
+
+    public void StartGame()
+    {
+        SpawnGrids();
+        bSpawnTimerEnabled = true;
+        bCreditCounterEnabled = true;
+    }
 
     private void UpdateSpawnTimer()
     {
@@ -48,11 +49,7 @@ public class GameManager : NetworkBehaviour
         {
             timeUntilNextSpawn = spawnInterval;
             SpawnNextWaves();
-        }
-        int displayedTime = (int)timeUntilNextSpawn + 1;
-        displayedTime = Mathf.Clamp(displayedTime, 1, (int)spawnInterval);
-        syncSpawnTime = displayedTime.ToString("F0");
-        spawnTimerText.text = syncSpawnTime;
+        }       
     }
 
     private void UpdateCredits()
@@ -63,7 +60,21 @@ public class GameManager : NetworkBehaviour
             timeUntilNextCredits = 1;
             credits += creditIncrement;
         }
-        creditDisplayText.text = credits.ToString();
+    }
+
+    private void UpdatePlayerHUD()
+    {
+        timeUntilNextHudUpdate = Mathf.Clamp(timeUntilNextHudUpdate -= Time.deltaTime, 0, hudUpdateInterval);
+        if (timeUntilNextHudUpdate <= 0)
+        {
+            timeUntilNextHudUpdate = hudUpdateInterval;
+
+            int displayedTime = (int)timeUntilNextSpawn + 1;
+            displayedTime = Mathf.Clamp(displayedTime, 1, (int)spawnInterval);
+            HUD.RpcUpdateSpawnTimer(displayedTime);
+
+            HUD.RpcUpdateCredits(credits);
+        }
     }
 
     // Update is called once per frame
@@ -74,7 +85,12 @@ public class GameManager : NetworkBehaviour
             UpdateSpawnTimer();
         }
 
-        //UpdateCredits();
+        if (bCreditCounterEnabled)
+        {
+            UpdateCredits();
+        }
+
+        UpdatePlayerHUD();
     }
 
     public void SpawnNextWaves()
