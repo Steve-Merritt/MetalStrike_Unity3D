@@ -11,7 +11,7 @@ public class NetworkMgr : NetworkManager
 
     public override void OnServerConnect(NetworkConnection conn)
     {
-        playerPrefab.GetComponent<PlayerController>().playerId = m_players;
+        playerPrefab.GetComponent<PlayerCtrl>().playerId = m_players;
 
         m_players++;
         Debug.Log("Players Connected: " + m_players);

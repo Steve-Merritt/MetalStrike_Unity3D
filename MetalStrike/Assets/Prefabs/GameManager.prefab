@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6da0e4eacc8368842bd5692cf41ab1c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Player: {fileID: 1152376068464386, guid: f41a2d5b832bda74e804c2bb5db0051c, type: 2}
   tankPrefab: {fileID: 114883864010736188, guid: 41e3da65baa54b74f8768c83fbaf8f21,
     type: 2}
   gridCellPrefab: {fileID: 114069868516864710, guid: cdacb65e31110ac4f9fd0ff0ab40adee,
@@ -158,9 +159,7 @@ MonoBehaviour:
   teamSpawn:
   - {fileID: 0}
   - {fileID: 0}
-  HUD: {fileID: 0}
   spawnInterval: 15
-  creditIncrement: 10
   bSpawnTimerEnabled: 0
 --- !u!114 &114156688780744248
 MonoBehaviour:

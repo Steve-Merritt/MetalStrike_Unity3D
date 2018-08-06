@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 
 public class GameManager : NetworkBehaviour
 {
+    public const int MAX_PLAYERS = 2;
+
     public Tank tankPrefab;
     public GridCell gridCellPrefab;
 
@@ -14,32 +16,24 @@ public class GameManager : NetworkBehaviour
     private const int GRID_SIZE = 8;
     private GridCell[] grid = new GridCell[GRID_SIZE* GRID_SIZE];
 
-    [SerializeField] HUDManager HUD;
-
     public float spawnInterval = 30;
     private float timeUntilNextSpawn = 0;
-   
-    public static int credits = 0;
-    public int creditIncrement = 10;
-    private float timeUntilNextCredits = 1;
 
-    public bool bSpawnTimerEnabled = false;
-    public bool bCreditCounterEnabled = false;
+    public bool bGameStateEnabled = false;
 
-    private float hudUpdateInterval = 1.0f;
-    private float timeUntilNextHudUpdate = 0;
+    private float gameStateUpdateInterval = 0.1f;
+    private float timeUntilNextGameStateUpdate = 0;
 
     // Use this for initialization
     void Start ()
     {
         timeUntilNextSpawn = spawnInterval;
-	}
+    }
 
     public void StartGame()
     {
         SpawnGrids();
-        bSpawnTimerEnabled = true;
-        bCreditCounterEnabled = true;
+        bGameStateEnabled = true;
     }
 
     private void UpdateSpawnTimer()
@@ -52,45 +46,33 @@ public class GameManager : NetworkBehaviour
         }       
     }
 
-    private void UpdateCredits()
+    private void SendGameStateUpdate()
     {
-        timeUntilNextCredits = Mathf.Clamp(timeUntilNextCredits -= Time.deltaTime, 0, 1);
-        if (timeUntilNextCredits <= 0)
+        timeUntilNextGameStateUpdate = Mathf.Clamp(timeUntilNextGameStateUpdate -= Time.deltaTime, 0, gameStateUpdateInterval);
+        if (timeUntilNextGameStateUpdate <= 0)
         {
-            timeUntilNextCredits = 1;
-            credits += creditIncrement;
-        }
-    }
-
-    private void UpdatePlayerHUD()
-    {
-        timeUntilNextHudUpdate = Mathf.Clamp(timeUntilNextHudUpdate -= Time.deltaTime, 0, hudUpdateInterval);
-        if (timeUntilNextHudUpdate <= 0)
-        {
-            timeUntilNextHudUpdate = hudUpdateInterval;
+            timeUntilNextGameStateUpdate = gameStateUpdateInterval;
 
             int displayedTime = (int)timeUntilNextSpawn + 1;
             displayedTime = Mathf.Clamp(displayedTime, 1, (int)spawnInterval);
-            HUD.RpcUpdateSpawnTimer(displayedTime);
 
-            HUD.RpcUpdateCredits(credits);
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject p in players)
+            {
+                p.GetComponent<PlayerCtrl>().RpcUpdateSpawnTimerDisplay(displayedTime);
+                p.GetComponent<PlayerCtrl>().RpcEnableCredits();
+            }
         }
     }
 
     // Update is called once per frame
     void Update ()
     {
-        if (bSpawnTimerEnabled)
+        if (bGameStateEnabled)
         {
             UpdateSpawnTimer();
+            SendGameStateUpdate();
         }
-
-        if (bCreditCounterEnabled)
-        {
-            UpdateCredits();
-        }
-
-        UpdatePlayerHUD();
     }
 
     public void SpawnNextWaves()
@@ -151,6 +133,16 @@ public class GameManager : NetworkBehaviour
                 }
                 ++v;
             }
+        }
+    }
+
+    private void EnableCredits()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject p in players)
+        {
+            print("calling rpc enable credits");
+            p.GetComponent<PlayerCtrl>().RpcEnableCredits();
         }
     }
 

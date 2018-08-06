@@ -20,10 +20,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4563429322554598}
   - component: {fileID: 114095961002761678}
+  - component: {fileID: 114830757990471608}
   - component: {fileID: 114085150264977730}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,4 +87,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tankPrefab: {fileID: 114883864010736188, guid: 41e3da65baa54b74f8768c83fbaf8f21,
     type: 2}
-  playerId: 1
+  HUD: {fileID: 1739864642018692, guid: 77dd77256ad0bcd4ba48bc8c455dc7fd, type: 2}
+  playerId: 0
+--- !u!114 &114830757990471608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1152376068464386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 164ed78c5ed819c4ab99326136f89ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creditIncrement: 10
+  bCreditCounterEnabled: 0

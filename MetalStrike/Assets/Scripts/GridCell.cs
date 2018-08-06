@@ -39,18 +39,17 @@ public class GridCell : NetworkBehaviour
 
     private void OnMouseDown()
     {
-        PlayerController pc = GetLocalPlayerController();
-        Debug.Log("player controller " + pc.playerId);
-
         if (!IsOwningPlayer())
             return;
 
+        GameObject player = GetLocalPlayer();
+        PlayerCtrl pc = player.GetComponent<PlayerCtrl>();
+
         if (!Occupied)
         {
-            if (true/* || GameManager.credits >= Tank.cost*/)
+            Debug.Log("player credits " + player.GetComponent<Credits>().credits);
+            if (player.GetComponent<Credits>().credits >= Tank.cost)
             {
-                //GameManager.credits -= Tank.cost;
-                //PlayerController pc = GetLocalPlayerController();
                 pc.CmdPlaceUnit(transform.position, transform.rotation, pc.playerId);
                 Occupied = true;
             }
@@ -59,13 +58,13 @@ public class GridCell : NetworkBehaviour
 
     private bool IsOwningPlayer()
     {
-        PlayerController pc = GetLocalPlayerController();
-        return pc.playerId == OwningPlayer;
+        GameObject pc = GetLocalPlayer();
+        return pc.GetComponent<PlayerCtrl>().playerId == OwningPlayer;
     }
 
-    private PlayerController GetLocalPlayerController()
+    private GameObject GetLocalPlayer()
     {
-        GameObject player = NetworkManager.singleton.client.connection.playerControllers[0].gameObject;
-        return player.GetComponent<PlayerController>();
+        List<PlayerController> pcs = NetworkManager.singleton.client.connection.playerControllers;
+        return NetworkManager.singleton.client.connection.playerControllers[0].gameObject;
     }
 }

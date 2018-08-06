@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
 
-public class HUDManager : NetworkBehaviour
+public class HUDManager : MonoBehaviour
 {
     public GameObject spawnTimer;
     private Text spawnTimerText;
@@ -18,15 +17,13 @@ public class HUDManager : NetworkBehaviour
         creditDisplayText = creditDisplay.GetComponent<Text>();
     }
 
-    [ClientRpc]
-    public void RpcUpdateSpawnTimer(int value)
+    public void UpdateSpawnTimer(int value)
     {
         spawnTimerText.text = value.ToString();
     }
 
-    [ClientRpc]
-    public void RpcUpdateCredits(int value)
+    public void UpdateCredits(int credits)
     {
-        creditDisplayText.text = value.ToString();
+        creditDisplayText.text = credits.ToString();
     }
 }

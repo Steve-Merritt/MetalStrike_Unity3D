@@ -7,6 +7,7 @@ TagManager:
   - Tank
   - Team1Base
   - Team2Base
+  - HUD
   layers:
   - Default
   - TransparentFX
